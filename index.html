@@ -119,9 +119,9 @@
         }
         .shooting-star {
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
+            width: 5px;
+            height: 5px;
+            background: gray;
             border-radius: 50%;
             animation: shooting-star 2s linear infinite;
         }
@@ -149,9 +149,16 @@
         .no {
             background: red;
             color: white;
+            position: relative; /* Added for random movement */
         }
         .choice-buttons button:hover {
             transform: scale(1.1);
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 24px;
+            color: white;
+            display: none; /* Initially hidden */
         }
     </style>
 </head>
@@ -179,9 +186,10 @@
         <h2>I know that Valentine’s Day is haram, and I do not interfere with it.</h2>
         <h3>So, would you like to take *Roza* (fast) with me, so that our relationship will be halal forever?</h3>
         <div class="choice-buttons">
-            <button class="yes" onclick="alert('You said Yes! May our journey be blessed.')">Yes</button>
-            <button class="no" onclick="alert('You said No! But remember, I will always respect your choice.')">No</button>
+            <button class="yes" id="yesButton">Yes</button>
+            <button class="no" id="noButton">No</button>
         </div>
+        <div class="message" id="message">You said Yes! May our journey be blessed FOREVER ❤️</div>
         <script>
             for (let i = 0; i < 30; i++) {
                 let star = document.createElement("div");
@@ -206,6 +214,39 @@
             document.querySelector('.page1').style.display = 'none';
             document.querySelector('.page2').style.display = 'flex';
         }
+
+        // Function to move the "No" button randomly
+        function moveNoButton() {
+            const noButton = document.getElementById('noButton');
+            const yesButton = document.getElementById('yesButton');
+
+            // Random position for the "No" button
+            const randomX = Math.random() * (window.innerWidth - noButton.offsetWidth);
+            const randomY = Math.random() * (window.innerHeight - noButton.offsetHeight);
+
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${randomX}px`;
+            noButton.style.top = `${randomY}px`;
+
+            // Increase the size of the "Yes" button
+            const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = `${currentSize + 2}px`;
+        }
+
+        // Function to show the message when "Yes" is clicked
+        function showMessage() {
+            const message = document.getElementById('message');
+            message.style.display = 'block'; // Show the message
+        }
+
+        // Add event listeners to the "No" button
+        const noButton = document.getElementById('noButton');
+        noButton.addEventListener('click', moveNoButton);
+        noButton.addEventListener('mouseover', moveNoButton);
+
+        // Add event listener to the "Yes" button
+        const yesButton = document.getElementById('yesButton');
+        yesButton.addEventListener('click', showMessage);
     </script>
 </body>
 </html>
